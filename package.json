@@ -1,0 +1,26 @@
+{
+  "name": "personal-page",
+  "type": "module",
+  "author": "",
+  "version": "1.0.0",
+  "description": "Here is my Person page (use nodejs to build this)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duchuy040421/Personal-Page.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/duchuy040421/Personal-Page/issues"
+  },
+  "homepage": "https://github.com/duchuy040421/Personal-Page#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "morgan": "^1.10.0"
+  }
+}
