@@ -1,0 +1,57 @@
+{{#section "music_js"}}
+    <script>
+        var timer;
+        var play = true;
+
+        $("#background").hover(function(){
+            $("#music_bar").removeClass('is-hidden');
+        }, function(){
+            clearInterval(timer);
+            timer = setTimeout(function(){
+                $("#music_bar").toggleClass('is-hidden');
+            }, 5000);
+        });
+
+        function playorstop(){
+            if(play === false){
+                $('#element_play').attr('src','/img/pause.svg');
+                $('#audioPlayer')[0].play();
+                play = true;
+            }else if(play === true){
+                $('#element_play').attr('src','/img/play.svg');
+                $('#audioPlayer')[0].pause()
+                play = false;
+            }
+        }
+
+        $('#audioPlayer')[0].addEventListener('ended',function(){
+            $('#element_play').attr('src','/img/play.svg');
+            play = false;
+        });
+
+    </script>
+{{/section}}
+
+
+<div class="hero is-fullheight video has-background-black" style="flex: 1" >
+    <audio autoplay src="https://dhuy.ml/song/berlin.mp3" id="audioPlayer"></audio>
+
+    <div class="hero-video" id="background" style="display: inline">
+        <video id="bgvid"  autoplay muted loop style="max-width: none">
+            <source src="/video/highstreet.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="hero-body is-justify-content-center is-flex is-align-items-flex-center">
+        <div class="container is-hidden" id="music_bar">
+            <div class="">
+                <div class="is-justify-content-center is-flex is-align-items-center">
+                    <img class="is-clickable element" style="width: 48px;height: 48px" src="/img/left.svg" onclick="previousSong();">
+                    <img class="mx-4 is-clickable element" id="element_play" style="width: 48px;height: 48px"
+                         src="/img/pause.svg" onclick="playorstop();"hover>
+                    <img class="is-clickable element" style="width: 48px;height: 48px" src="/img/right.svg" onclick="nextSong();">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
