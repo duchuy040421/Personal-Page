@@ -2,6 +2,8 @@
     <script>
         var timer;
         var play = true;
+        var dataMusic = ['https://dhuy.ml/song/berlin.mp3'];
+        var currentSong = 1;
 
         $("#background").hover(function(){
             $("#music_bar").removeClass('is-hidden');
@@ -24,14 +26,119 @@
             }
         }
 
+        function nextSong(){
+            if(currentSong === dataMusic.length)
+                currentSong = 1;
+            else
+                currentSong++;
+
+            $('#audioPlayer')[0].pause();
+            $('#audioPlayer').attr('src',dataMusic[currentSong-1].link);
+            $('#element_play').attr('src','/img/pause.svg');
+            $('#song_title').text(dataMusic[currentSong-1].title);
+            $('#audioPlayer')[0].play();
+        }
+
+        function previousSong(){
+            if(currentSong === 1)
+                currentSong = dataMusic.length;
+            else
+                currentSong--;
+
+            $('#audioPlayer')[0].pause();
+            $('#audioPlayer').attr('src',dataMusic[currentSong-1].link);
+            $('#element_play').attr('src','/img/pause.svg');
+            $('#song_title').text(dataMusic[currentSong-1].title);
+            $('#audioPlayer')[0].play();
+        };
+
+        $('#frmReport').submit(function(e){
+           e.preventDefault();
+           const songName = $('#songName').val();
+           const note = $('#note').val();
+
+           if(songName.length === 0 || note.length === 0){
+               alert("Vui lòng nhập đủ thông tin trước khi gửi");
+           }else{
+               $.ajax({
+                   url: "/music/report/",
+                   type: "POST",
+                   data: {
+                       songName: songName,
+                       note: note
+                   },
+               });
+
+               $('#songName').val("");
+               $('#note').val("");
+               $('.form_report').removeClass('is-active');
+               $('#announce').toggleClass('is-active');
+           }
+
+        });
+
+        function openModel(){
+            $('.form_report').toggleClass('is-active');
+        }
+
+        function closeModal(){
+            $('.form_report').removeClass('is-active');
+        }
+
         $('#audioPlayer')[0].addEventListener('ended',function(){
-            $('#element_play').attr('src','/img/play.svg');
-            play = false;
+            nextSong();
+        });
+
+        $.getJSON('/music/data',function(data){
+           if(data.length !== 0)
+               dataMusic = data;
+        });
+
+
+        function closeModal($el) {
+            $el.classList.remove('is-active');
+        }
+
+        (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+            const $target = $close.closest('.modal');
+
+            $close.addEventListener('click', () => {
+                closeModal($target);
+            });
         });
 
     </script>
 {{/section}}
 
+<div class="modal" id="announce">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <section class="modal-card-body">
+            <p class="is-size-4">Gửi thành công!!</p>
+        </section>
+    </div>
+</div>
+
+<div class="modal form_report">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title is-size-4"><strong class="has-text-primary">Đóng góp thêm bài hát</strong></p>
+            <button class="delete" onclick="closeModal();" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <form  method="post" id="frmReport">
+                <p class="card-header-title p-0 mb-2 has-text-primary is-size-4 is-bold ">Tên bài hát</p>
+                <input class="input is-primary mb-3" type="text" placeholder="berlin..." name="songName" id="songName">
+                <p class="card-header-title mb-2 p-0 has-text-primary is-bold is-size-4">Ghi chú</p>
+                <input class="input is-large" type="text" placeholder="..." name="note" id="note">
+            </form>
+        </section>
+        <footer class="modal-card-foot">
+            <a class="button is-success" href="javascript: $('#frmReport').submit();">Gửi</a>
+        </footer>
+    </div>
+</div>
 
 <div class="hero is-fullheight video has-background-black" style="flex: 1" >
     <audio autoplay src="https://dhuy.ml/song/berlin.mp3" id="audioPlayer"></audio>
@@ -45,6 +152,9 @@
     <div class="hero-body is-justify-content-center is-flex is-align-items-flex-center">
         <div class="container is-hidden" id="music_bar">
             <div class="">
+                <div class="is-justify-content-center is-flex is-align-items-center">
+                    <strong class="has-text-white mb-2" id="song_title">Berlin</strong>
+                </div>
                 <div class="is-justify-content-center is-flex is-align-items-center">
                     <img class="is-clickable element" style="width: 48px;height: 48px" src="/img/left.svg" onclick="previousSong();">
                     <img class="mx-4 is-clickable element" id="element_play" style="width: 48px;height: 48px"
