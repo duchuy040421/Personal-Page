@@ -7,7 +7,7 @@ import errorMdw from "./error.mdw.js";
 
 export default function (app){
     configMdw(app);
-    sessionMdw(app);
+    // sessionMdw(app);
     viewMdw(app);
     routesMdw(app);
     errorMdw(app);

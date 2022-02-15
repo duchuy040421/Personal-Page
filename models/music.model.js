@@ -3,6 +3,6 @@ import db from "../utils/db.js";
 
 export default {
     getAll(){
-        return db('music').select();
+        return db('personalweb.music').select();
     }
 }
