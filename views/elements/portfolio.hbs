@@ -62,33 +62,57 @@
 
                 <div class="columns is-multiline p-3 is-centered">
 <!--                    <h1 class="card-header">COMING SOON</h1>-->
-                    <div class="column is-6">
-                        <a href="https://duchuy040421.github.io/todo-app/">
-                            <div class="card has-background-white-bis is-clickable">
-                                <div class="card-content">
-                                    <div class="media">
-                                        <div class="media-left">
-                                            <figure class="image is-96x96 m-0">
-                                                <img src="/img/portfolio/todo-app.png" alt="todo-app">
-                                            </figure>
-                                        </div>
-                                        <div class="media-content">
-                                            <p class="title is-4">TODO APP</p>
-                                            <p class="subtitle is-6">@DucHuy</p>
-                                        </div>
+                    <div class="column is-6 is-flex">
+                        <div class="card has-background-white-bis is-clickable" onclick="window.open('https://duchuy040421.github.io/todo-app/');">
+                            <div class="card-content">
+                                <div class="media m-0">
+                                    <div class="media-left">
+                                        <figure class="image is-96x96 m-0">
+                                            <img src="/img/portfolio/todo-app.png"  alt="todo-app">
+                                        </figure>
                                     </div>
-
-                                    <div class="content">
-                                        Todo app dùng để thêm, chỉnh sửa những việc cần làm <a>#HTML</a>.
-                                        <a href="#">#css</a> <a href="#">#js</a>
-                                        <br>
-                                        <time datetime="2022-3-5">11:50 PM - 5 Mar 2022</time>
+                                    <div class="media-content">
+                                        <p class="title is-4">TODO APP</p>
+                                        <p class="subtitle is-6">@DucHuy</p>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
 
+                                <div class="content">
+                                    Todo app dùng để thêm, chỉnh sửa những việc cần làm <a>#HTML</a>.
+                                    <a href="#">#css</a> <a href="#">#js</a>
+                                    <br>
+                                    <time datetime="2022-3-5">11:50 PM - 5 Mar 2022</time>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    {{#each list}}
+                        <div class="column is-6 is-flex">
+                                <div class="card has-background-white-bis is-clickable"
+                                     onclick="window.open('{{link}}');">
+                                    <div class="card-content">
+                                        <div class="media m-0">
+                                            <div class="media-left">
+                                                <figure class="image is-96x96 m-0">
+                                                    <img src="{{linkImg}}" alt="{{title}}">
+                                                </figure>
+                                            </div>
+                                            <div class="media-content">
+                                                <p class="title is-4">{{title}}</p>
+                                                <p class="subtitle is-6">@DucHuy</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="content">
+                                            {{content}}
+                                            <br>
+                                            <time datetime="">{{time}}</time>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    {{/each}}
 
                 </div>
 
